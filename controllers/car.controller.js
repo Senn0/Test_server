@@ -1,8 +1,8 @@
-const { getCarDB } = require("../services/car.service");
-const { getCarOneDB } = require("../services/car.service");
+const { getCarDB, getCarOneDB, postCarDB, updateCarDB } = require("../service/car.service");
 
 const getCar = (req, res) => {
   const data = getCarDB();
+
   res.status(200).json(data);
 };
 
@@ -11,21 +11,41 @@ const getCarOne = (req, res) => {
   const data = getCarOneDB(id);
   res.status(200).json(data);
 };
+
 const postCar = (req, res) => {
-  console.log(req);
-  res.status(200).json("Создание машины");
+  const { name, modal, years, price } = req.body;
+  let dataCar = {
+    name,
+    modal,
+    years,
+    price,
+  };
+  try {
+    const ress = postCarDB(dataCar);
+    if (!ress) res.status(400).json("Ошибка создания");
+    res.status(200).json(res);
+  } catch (error) {
+    res.status(400).json("error");
+  }
 };
+
 const updateCar = (req, res) => {
-  res.status(200).json("Обновление машины");
+  const id = req.params.id;
+  const { name, modal, years, price } = req.body;
+  let result = updateCarDB(id, name, modal, years, price);
+
+  res.status(200).json(result);
 };
+
 const deleteCar = (req, res) => {
-  res.status(200).json("Удаление машины");
+  res.status(200).json("удалили машину");
 };
 
 module.exports = {
   getCar,
   postCar,
-  deleteCar,
   updateCar,
+  deleteCar,
   getCarOne,
+  postCarDB,
 };

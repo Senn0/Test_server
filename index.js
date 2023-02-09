@@ -2,21 +2,20 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const http = require("http");
-const { response } = require("express");
+const morgan = require("morgan"); 
 const routerCar = require("./routes/car.route");
 
-const app = express();
-const server = http.createServer(app);
+const app = express(); //созд экземпляр экспресса
+const server = http.createServer(app); //создаём сервер
 
 const port = process.env.PORT || 3003;
 
-app.use(express.json()); //работа с форматами json
-app.use(express.urlencoded({ extended: true })); //передача параметров в строке
-
-app.use(express.static("public")); //подключение статичных файлов
-
+app.use(morgan("dev")); 
+app.use(express.json()); //Работа с форматом json
+app.use(express.urlencoded({ extended: true })); //что бы мы моги передавать параметры в строке
+app.use(express.static("public")); // подключаем статичные файлы
 app.use((err, request, response, next) => {
-  // midleware - промежуточный обработчик
+  //middleware - промежуточный обработчик
   console.log(err);
   response.status(500).send("server crash");
   next();
@@ -24,11 +23,12 @@ app.use((err, request, response, next) => {
 
 app.use("/api/car", routerCar);
 
-/*app.use("/", (req, res) => {
-  res.status(200).json("Hello World работает");
-});*/
+//app.use('/', (req, res) =>{
+//    res.status(200).json('Hello word');
+//});
 
 server.listen(port, () => {
+  //говорим серверу отслеживать порт и запускаем сервер
   console.log(`Server running on port http://localhost:${port}`);
 });
 

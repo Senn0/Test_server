@@ -1,14 +1,14 @@
 {
-  "name": "test",
+  "name": "appp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "",
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "Senn",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.20"
@@ -16,6 +16,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "jsonfile": "^6.1.0"
+    "jsonfile": "^6.1.0",
+    "morgan": "^1.10.0"
   }
 }
